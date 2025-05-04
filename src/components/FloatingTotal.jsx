@@ -9,7 +9,7 @@ function FloatingTotal({ totalCost }) {
 
   return (
     <div className="floating-total-container">
-      <span className="total-label">Total:</span>
+      <span className="total-label">Summa:</span>
       <span className="total-amount">{totalCost} €</span>
     </div>
   );

@@ -150,8 +150,8 @@ function App() {
         </div>
       )}
 
-      {/* Floating Total Display */}
-      <FloatingTotal totalCost={totalCost} />
+      {/* Floating Total Display - Render only when a date is selected */}
+      {selectedDate && <FloatingTotal totalCost={totalCost} />}
 
     </div>
   );
