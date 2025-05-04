@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 
-function BookingForm({ selectedDate, onSubmit }) {
+// Accept props including lifted state and callbacks
+function BookingForm({
+    selectedDate,
+    onSubmit,
+    numberOfDays,
+    detergent,
+    onNumberOfDaysChange,
+    onDetergentChange
+}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
-  const [numberOfDays, setNumberOfDays] = useState(1);
-  const [detergent, setDetergent] = useState(false);
   const [extraInfo, setExtraInfo] = useState('');
 
   const [formError, setFormError] = useState('');
@@ -37,25 +43,16 @@ function BookingForm({ selectedDate, onSubmit }) {
       return;
     }
 
-    // Pass all data including the new fields
+    // Pass only form-specific data. Days/detergent already in App state.
     onSubmit({
         name,
         email,
         streetAddress,
         zipCode,
         phone,
-        numberOfDays: parseInt(numberOfDays, 10),
-        detergent,
         extraInfo
     });
-
-    // Clear form (optional, consider keeping date selected)
-    // setName('');
-    // setEmail('');
-    // setAddress('');
-    // setPhone('');
-    // setNumberOfDays(1);
-    // setDetergent(false);
+    // Consider if clearing fields here is desired, or in App.jsx after success
   };
 
   return (
@@ -115,16 +112,16 @@ function BookingForm({ selectedDate, onSubmit }) {
         />
       </div>
 
-      {/* Replace Number Input with Buttons */}
+      {/* Day Buttons - Use prop and callback */}
       <div>
-        <label>Kuinka moneksi päiväksi haluat vuokrata:</label>
+        <label>How many days:</label>
         <div className="days-buttons-container">
             {[1, 2, 3, 4, 5].map((days) => (
                 <button
-                    type="button" // Important: prevent form submission
+                    type="button"
                     key={days}
                     className={`day-button ${numberOfDays === days ? 'active' : ''}`}
-                    onClick={() => setNumberOfDays(days)}
+                    onClick={() => onNumberOfDaysChange(days)} // Use callback
                 >
                     {days}
                 </button>
@@ -132,18 +129,18 @@ function BookingForm({ selectedDate, onSubmit }) {
         </div>
       </div>
 
-      {/* Toggle Switch on its own line */}
+      {/* Toggle Switch - Use prop and callback */}
       <div className="detergent-option toggle-option">
-        <div> {/* Div for the text label */} 
-          <label htmlFor="detergentToggle">Tarvitsetko pesuainetta?</label>
+        <div>
+          <label htmlFor="detergentToggle">Detergent needed?</label>
         </div>
-        <div> {/* Div for the switch mechanism */} 
+        <div>
           <input
               type="checkbox"
               id="detergentToggle"
               className="toggle-checkbox"
-              checked={detergent}
-              onChange={(e) => setDetergent(e.target.checked)}
+              checked={detergent} // Use prop
+              onChange={(e) => onDetergentChange(e.target.checked)} // Use callback
           />
           <label htmlFor="detergentToggle" className="switch-label"></label>
         </div>
@@ -160,7 +157,7 @@ function BookingForm({ selectedDate, onSubmit }) {
           ></textarea>
       </div>
 
-      <button type="submit">Varaa nyt</button>
+      <button type="submit">Book Now</button>
     </form>
   );
 }

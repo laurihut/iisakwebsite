@@ -1,0 +1,36 @@
+.floating-total-container {
+    position: fixed; /* Position relative to the viewport */
+    bottom: 30px;    /* Slightly more offset */
+    right: 30px;     /* Slightly more offset */
+    background-color: var(--calendar-tile-active-bg, #FFD600); /* Safety Yellow */
+    color: #1A1A1A; /* Darker charcoal/near black for stronger contrast */
+    padding: 18px 28px; /* Increased padding */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Deeper, slightly softer shadow */
+    z-index: 1000; /* Ensure it's above other content */
+    display: flex;
+    align-items: baseline; /* Align text nicely */
+    gap: 0.8rem; /* Increased gap */
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    border: 1px solid rgba(0,0,0,0.1); /* Subtle border */
+    transition: transform 0.2s ease-out; /* Add subtle transition */
+    /* Remove temporary border if it exists */
+    /* border: 5px solid red !important; */ 
+}
+
+/* Optional: Add slight scale effect on hover */
+.floating-total-container:hover {
+    transform: scale(1.03);
+}
+
+.total-label {
+    font-size: 1em; /* Increased size */
+    font-weight: 600; /* Bolder label */
+    opacity: 0.9; /* Slightly less emphasis */
+}
+
+.total-amount {
+    font-size: 1.8em; /* Significantly larger amount */
+    font-weight: 700;
+    line-height: 1; /* Adjust line height for larger font */
+} 
