@@ -114,7 +114,7 @@ function BookingForm({
 
       {/* Day Buttons - Use prop and callback */}
       <div>
-        <label>How many days:</label>
+        <label>Kuinka moneksi päiväksi haluat varata:</label>
         <div className="days-buttons-container">
             {[1, 2, 3, 4, 5].map((days) => (
                 <button
