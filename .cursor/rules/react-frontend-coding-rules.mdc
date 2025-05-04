@@ -1,0 +1,100 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 🧩 React Frontend Coding Rules
+
+## 📁 Project Structure
+
+```
+/src
+  /components       → Shared UI components
+  /hooks            → Custom hooks
+  /contexts         → React Context providers
+  /pages            → Route-level components
+  /services         → API services
+  /utils            → Helpers and utilities
+  /styles           → Global and theme styles
+  /types            → Shared TypeScript types
+  App.tsx
+  main.tsx
+```
+
+---
+
+## 🧱 File Naming Conventions
+
+| Item                 | Convention                  | Example                   |
+|----------------------|-----------------------------|---------------------------|
+| React Component      | PascalCase                  | `UserCard.tsx`            |
+| Hook                 | Starts with `use` + camel   | `useTheme.ts`             |
+| Utility / Service    | camelCase                   | `fetchUserData.ts`        |
+| Test Files           | Suffix `.test.tsx`          | `UserCard.test.tsx`       |
+| Type Definitions     | Suffix `.types.ts`          | `UserCard.types.ts`       |
+| Style Modules        | Suffix `.styles.ts`         | `UserCard.styles.ts`      |
+
+---
+
+## 🧑‍💻 Code Style Rules
+
+### 🧩 Components
+- Use **functional components** only.
+- Prefer **arrow functions**:
+  ```ts
+  const UserCard = () => { ... }
+  ```
+- Use **inline styles** via CSS-in-JS where needed.
+- Keep components under **200 lines**, single responsibility.
+
+### 🪝 Hooks & State
+- Local UI state → `useState`
+- Derived or complex logic → custom hooks
+- Global/shared state → Context
+- Prefix all hooks with `use`, and follow `useXyz` format.
+
+### 🧠 Naming
+- Props/state: `camelCase` → `isLoading`, `userName`
+- Handlers: Prefix with `handle` → `handleClick`
+- Constants: `UPPER_SNAKE_CASE`
+- Types: Prefix with `I` or `T` → `IUser`, `TPostData`
+
+### 🧼 Code Practices
+- Always destructure props
+- Use conditional rendering over ternary chains:
+  ```tsx
+  if (!user) return <Loading />
+  ```
+- Avoid deep prop drilling; use context instead
+- Keep maximum nesting to 3 levels
+
+---
+
+## ⚙️ Performance Best Practices
+- Use `useCallback` for event handlers
+- Use `useMemo` for derived values
+- Lazy-load routes using `React.lazy()`
+- Split large contexts into smaller ones
+
+---
+
+## 🧪 Testing Guidelines
+- Use **Jest + React Testing Library**
+- Test **UI behavior, not implementation**
+- Mock external API services
+- Place tests next to the component:
+  ```
+  /components
+    UserCard.tsx
+    UserCard.test.tsx
+  ```
+
+---
+
+## 🚦 Code Quality Tools
+- **Prettier** for formatting
+- **ESLint** with:
+  - `@typescript-eslint/eslint-plugin`
+  - `eslint-plugin-react`
+  - `eslint-plugin-react-hooks`
+- Use **husky + lint-staged** to enforce formatting/linting on commits
