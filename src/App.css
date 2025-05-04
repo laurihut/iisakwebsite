@@ -450,7 +450,7 @@ body {
 
 /* Add pseudo-element for the text (Yes/No) */
 .switch-label::before {
-    content: 'No';
+    content: 'En';
     position: absolute;
     top: 50%; /* Position from top */
     transform: translateY(-50%); /* Vertically center */
@@ -475,7 +475,7 @@ body {
 
 /* Change text content and alignment when checked */
 .toggle-checkbox:checked + .switch-label::before {
-    content: 'Yes';
+    content: 'Kyllä';
     right: auto; /* Remove right positioning */
     left: 12px; /* Position from the left edge */
     color: var(--form-input-color-dark, #1E1E1E);

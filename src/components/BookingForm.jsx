@@ -132,7 +132,7 @@ function BookingForm({
       {/* Toggle Switch - Use prop and callback */}
       <div className="detergent-option toggle-option">
         <div>
-          <label htmlFor="detergentToggle">Detergent needed?</label>
+          <label htmlFor="detergentToggle">Tarvitsetko pesuaineen?</label>
         </div>
         <div>
           <input
@@ -157,7 +157,7 @@ function BookingForm({
           ></textarea>
       </div>
 
-      <button type="submit">Book Now</button>
+      <button type="submit">Varaa nyt</button>
     </form>
   );
 }
