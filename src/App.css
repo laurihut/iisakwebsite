@@ -45,21 +45,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
-  padding: 2rem 1rem;
+  gap: 1.5rem;
+  padding: 3rem 1rem;
   max-width: 900px;
   margin: 2rem auto;
 }
 
 .app-container h1 {
-  color: var(--heading-color, #333);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .app-container p {
-  color: var(--text-color-secondary, #666);
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
 .calendar-container {
@@ -365,6 +363,8 @@ body {
     --error-bg-color: #4A4A4A;
     --error-border-color: #787878;
     --calendar-label-hover-bg: #1E1E1E;
+    --title-shadow-color: 1px 1px 3px rgba(0,0,0,0.5);
+    --heading-color: #FFD600;
   }
 
   body {
@@ -379,6 +379,14 @@ body {
 
   .react-calendar {
     color: var(--calendar-tile-color);
+  }
+
+  .main-title {
+    color: var(--heading-color, #FFD600);
+  }
+
+  .subtitle, .instructions {
+    color: var(--text-color-secondary, #C0C0C0);
   }
 }
 
@@ -568,4 +576,66 @@ body {
     border-color: var(--button-hover-bg, #4A4A4A);
     outline: none;
     box-shadow: 0 0 0 3px var(--button-focus-shadow, rgba(255, 214, 0, 0.4));
+}
+
+/* --- Title/Heading Styles --- */
+.main-title {
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+    font-weight: 800; /* Extra bold */
+    color: var(--heading-color, #1E1E1E);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem; /* Adjust spacing */
+    letter-spacing: 1px; /* Slight spacing */
+    line-height: 1.1;
+    /* Add text shadow for depth, subtle in light, more contrast in dark */
+    text-shadow: 1px 1px 2px var(--title-shadow-color, rgba(0,0,0,0.1)); 
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.3rem); /* Responsive font size */
+    font-weight: 400; /* Normal weight */
+    color: var(--info-box-text-color, #4A4A4A);
+    margin-top: 0;
+    margin-bottom: 0.8rem; /* Adjust spacing inside box */
+    line-height: 1.4;
+}
+
+.instructions {
+    font-size: clamp(0.8rem, 2vw, 0.9rem); /* Responsive font size */
+    font-weight: 600; /* Semi-bold */
+    color: var(--info-box-text-color, #4A4A4A);
+    text-transform: uppercase;
+    letter-spacing: 2px; /* Wider letter spacing */
+    margin-top: 0.8rem; /* Adjust spacing inside box */
+    margin-bottom: 0; /* Remove bottom margin */
+}
+
+/* Info Box Container */
+.info-box {
+    background-color: var(--info-box-bg, rgba(255, 255, 255, 0.85)); /* Semi-transparent white in light mode */
+    padding: 1.5rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 2.5rem; /* Space before calendar */
+    max-width: 600px; /* Control width */
+    width: 90%; /* Responsive width */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+    text-align: center; /* Center text inside */
+}
+
+/* --- Define info box variables --- */
+:root {
+    --info-box-bg: rgba(255, 255, 255, 0.85); /* Light mode BG */
+    --info-box-text-color: #4A4A4A; /* Dark Grey text */
+    /* ... other root variables ... */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --info-box-bg: rgba(30, 30, 30, 0.85); /* Semi-transparent Charcoal Black */
+        --info-box-text-color: #DCE1E7; /* Transparent Clear text */
+        /* ... other dark mode variables ... */
+    }
+    .subtitle, .instructions {
+        color: var(--info-box-text-color, #DCE1E7); /* Apply dark mode text color */
+    }
 }
