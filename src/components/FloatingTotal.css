@@ -67,4 +67,23 @@
 
 .total-amount.flash-active {
   animation: flashEffect 0.5s ease-in-out; /* Apply the animation */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .floating-total-container {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 20px; /* Slightly reduced padding */
+    gap: 0.6rem;
+    border-radius: 10px;
+  }
+
+  .total-label {
+    font-size: 0.9em;
+  }
+
+  .total-amount {
+    font-size: 1.6em;
+  }
 } 

@@ -46,10 +46,25 @@
     width: 45px;
     height: 45px;
     bottom: 40px; /* ADJUSTED for vertical centering on mobile */
-    right: 190px;
+    right: 190px; /* May still be too large for very small screens */
   }
   .floating-info-btn svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+/* Added for very small screens */
+@media (max-width: 480px) {
+  .floating-info-btn {
+    width: 40px;
+    height: 40px;
+    bottom: 20px; /* Adjusted to align center with an assumed 50px tall FloatingTotal button at bottom: 15px */
+    right: 175px; /* Positioned to the left of an assumed FloatingTotal button */
+                  /* (FloatingTotal right: 15px + ~150px width + 10px spacing) */
+  }
+  .floating-info-btn svg {
+    width: 22px;
+    height: 22px;
   }
 } 

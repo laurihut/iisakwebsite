@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -45,10 +45,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 3rem 1rem;
+  gap: 1rem;
+  padding: 1.5rem 0.5rem;
   max-width: 900px;
-  margin: 2rem auto;
+  margin: 1rem auto;
 }
 
 .app-container h1 {
@@ -64,7 +64,7 @@
   width: 100%;
   max-width: 450px;
   background-color: var(--calendar-bg, #fff);
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--calendar-border-color, #eee);
@@ -126,11 +126,11 @@
   background: none;
   border: none;
   padding: 0;
-  height: 50px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95em;
+  font-size: 0.9em;
   color: var(--calendar-tile-color, #444);
   border-radius: 8px;
   cursor: pointer;
@@ -175,7 +175,7 @@
 
 .booking-form-container {
   margin-top: 1rem;
-  padding: 2rem;
+  padding: 1.5rem 1rem;
   border: 1px solid var(--form-border-color, #e0e0e0);
   border-radius: 12px;
   background-color: var(--form-bg, #fff);
@@ -187,27 +187,27 @@
 
 .booking-form h3 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--form-heading-color, #333);
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 .booking-form div {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   text-align: left;
 }
 
 .booking-form label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.85em;
   color: var(--form-label-color, #555);
 }
 
 .booking-form input {
   width: 100%;
-  padding: 0.8em 1em;
+  padding: 0.7em 0.9em;
   border: 1px solid var(--form-input-border-color, #ccc);
   border-radius: 8px;
   box-sizing: border-box;
@@ -225,7 +225,7 @@
 
 .booking-form button {
   width: 100%;
-  padding: 0.9em 1.5em;
+  padding: 0.8em 1.2em;
   background-color: var(--button-bg, #787878);
   color: white;
   border: none;
@@ -238,7 +238,7 @@
 }
 
 .booking-form button:hover:not(:disabled) {
-  background-color: var(--button-hover-bg, #4A4A4A);
+  background-color: var(--button-hover-bg, #ffbb00);
   transform: translateY(-1px);
 }
 
@@ -289,106 +289,163 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    color: #DCE1E7;
+  /* Consolidated :root variables for dark mode */
+  :root {
+    /* Calendar variables for dark mode */
+    --calendar-bg: #1E1E1E;
+    --calendar-border-color: #333;
+    --calendar-nav-color: #DCE1E7;
+    --calendar-nav-hover-bg: #333333;
+    --calendar-nav-disabled-color: #555;
+    --calendar-weekday-color: #AAAAAA;
+    --calendar-tile-color: #DCE1E7;
+    --calendar-tile-hover-bg: #003366; /* A distinct hover for dark mode */
+    --calendar-tile-hover-color: #FFFFFF;
+    --calendar-tile-disabled-bg: #2a2a2a;
+    --calendar-tile-disabled-color: #555;
+    --calendar-tile-today-bg: #4a4a2a !important;
+    --calendar-tile-today-color: #FFFBE6 !important;
+    --calendar-tile-today-hover-bg: #5a5a3a !important;
+    --calendar-tile-active-bg: #B8860B !important; /* DarkGoldenrod - less bright than yellow */
+    --calendar-tile-active-hover-bg: #A37000 !important;
+    --calendar-tile-neighbor-color: #555;
+
+    /* Form variables for dark mode */
+    --form-bg-dark: #1E1E1E;
+    --form-border-color-dark: #333;
+    --form-heading-color-dark: #E0E0E0; /* Consistent with primary text */
+    --form-label-color-dark: #B0B0B0;  /* Consistent with subtitle */
+    --form-input-bg-dark: #2C2C2C;
+    --form-input-color-dark: #E0E0E0;
+    --form-input-border-color-dark: #444;
+    --form-input-focus-shadow-dark: rgba(255, 214, 0, 0.5); /* Kärcher yellow focus */
+
+    /* Button variables for dark mode */
+    --button-bg-dark: #5A5A5A;
+    --button-hover-bg-dark: #FFD600; /* Yellow for hover */
+    --button-text-color-dark: #FFFFFF;
+    --button-text-hover-color-dark: #1E1E1E; /* Text color on yellow hover */
+    --button-disabled-bg-dark: #333333;
+
+    /* General Dark Theme Variables (merged and refined) */
+    --main-bg-color-dark: #101010;
+    --primary-text-color-dark: #E0E0E0;
+    --secondary-text-color-dark: #A0A0A0; /* For less prominent text */
+    --accent-color-dark: #FFD600;      /* Kärcher Yellow */
+    --heading-color: #FFD600;          /* Titles in Kärcher Yellow */
+    --link-color-dark: #FFD600;        /* Links in Kärcher Yellow */
+    --card-bg-color-dark: #1C1C1C;
+    --card-border-color-dark: #333333;
+    --button-primary-bg-dark: #FFD600;
+    --button-primary-text-dark: #1E1E1E;
+    --button-secondary-bg-dark: #333333;
+    --button-secondary-text-dark: #E0E0E0;
+
+    /* Specific text elements */
+    --main-title-color-dark: #FFD600; /* Explicitly Kärcher Yellow */
+    --subtitle-color-dark: #B0B0B0;   /* Slightly more prominent than secondary text */
+    --instructions-color-dark: #A0A0A0; /* Same as secondary text */
+
+    /* Info Box */
+    --info-box-bg-dark: #2a2a2a;
+    --info-box-border-dark: #444;
+    --info-box-text-dark: #C0C0C0;
   }
+
+  /* The simpler 'body { color: #DCE1E7; }' rule that was here is now removed by not re-specifying it. */
+  /* The main 'body' style is defined below using variables. */
 
   .booking-form-container {
-    background-color: #1E1E1E;
-    border-color: #4A4A4A;
+    background-color: var(--form-bg-dark);
+    border-color: var(--form-border-color-dark);
+    /* other properties if any */
   }
 
-  .booking-form h3, .booking-form label {
-    color: #DCE1E7;
+  .booking-form h3 {
+    color: var(--form-heading-color-dark);
+  }
+  .booking-form label {
+    color: var(--form-label-color-dark);
   }
 
-  .booking-form input {
-    background-color: var(--form-input-bg, #1E1E1E);
-    border-color: var(--form-input-border-color, #4A4A4A);
-    color: var(--form-input-color, #DCE1E7);
+  .booking-form input,
+  .booking-form textarea { /* Added textarea for consistency */
+    background-color: #2c2c2c;
+    color: var(--form-input-color-dark);
+    border-color: var(--form-input-border-color-dark);
   }
-
+  .booking-form input:focus,
+  .booking-form textarea:focus { /* Added textarea for consistency */
+    border-color: var(--accent-color-dark); /* Kärcher Yellow */
+    box-shadow: 0 0 0 3px var(--form-input-focus-shadow-dark);
+  }
+  
   .react-calendar {
-    color: var(--calendar-tile-color);
-    background: var(--calendar-bg, #1E1E1E) !important;
+    /* Ensure react-calendar specific dark styles use variables */
+    /* Example: its navigation, weekdays, etc. should use vars like --calendar-nav-color */
   }
+  /* .react-calendar__navigation button, .react-calendar__month-view__weekdays__weekday abbr, etc. should use new vars */
+  
   .react-calendar__tile:disabled {
-    background-color: #101010;
-    color: #787878;
+    background-color: var(--calendar-tile-disabled-bg);
+    color: var(--calendar-tile-disabled-color);
   }
   .react-calendar__tile:enabled:hover,
-  .react-calendar__tile:enabled:focus {
-    background-color: #4A4A4A;
+  .react-calendar__tile:enabled:focus { /* Added focus state */
+    background-color: var(--calendar-tile-hover-bg);
+    color: var(--calendar-tile-hover-color);
   }
   .react-calendar__tile--now {
-    background: #4A4A4A;
+    background-color: var(--calendar-tile-today-bg) !important;
+    color: var(--calendar-tile-today-color) !important;
+  }
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus { /* Added focus state */
+    background-color: var(--calendar-tile-today-hover-bg) !important;
   }
   .react-calendar__tile--active {
-    color: #1E1E1E !important;
+    background-color: var(--calendar-tile-active-bg) !important;
+    color: var(--button-primary-text-dark) !important; /* Text color for active tile */
+  }
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus { /* Added focus state */
+    background-color: var(--calendar-tile-active-hover-bg) !important;
   }
 
-  :root {
-    --heading-color: #DCE1E7;
-    --text-color-secondary: #C0C0C0;
-    --calendar-bg: #1E1E1E;
-    --calendar-border-color: #4A4A4A;
-    --calendar-nav-color: #FFD600;
-    --calendar-nav-hover-bg: #4A4A4A;
-    --calendar-nav-disabled-color: #787878;
-    --calendar-weekday-color: #C0C0C0;
-    --calendar-tile-color: #DCE1E7;
-    --calendar-tile-hover-bg: #4A4A4A;
-    --calendar-tile-hover-color: #FFD600;
-    --calendar-tile-disabled-bg: #101010;
-    --calendar-tile-disabled-color: #787878;
-    --calendar-tile-today-bg: #4A4A4A !important;
-    --calendar-tile-today-color: #FFD600 !important;
-    --calendar-tile-today-hover-bg: #FFD600 !important;
-    --calendar-tile-active-bg: #FFD600 !important;
-    --calendar-tile-active-hover-bg: #e6bf00 !important;
-    --calendar-tile-neighbor-color: #787878;
-    --form-bg: #1E1E1E;
-    --form-border-color: #4A4A4A;
-    --form-heading-color: #DCE1E7;
-    --form-label-color: #C0C0C0;
-    --form-input-bg: #1E1E1E;
-    --form-input-border-color: #4A4A4A;
-    --form-input-color: #DCE1E7;
-    --form-input-color-dark: #1E1E1E;
-    --button-bg: #4A4A4A;
-    --button-hover-bg: #787878;
-    --button-focus-shadow: rgba(255, 214, 0, 0.5);
-    --button-disabled-bg: #787878;
-    --error-text-color: #FFD600;
-    --error-bg-color: #4A4A4A;
-    --error-border-color: #787878;
-    --calendar-label-hover-bg: #1E1E1E;
-    --title-shadow-color: 1px 1px 3px rgba(0,0,0,0.5);
-    --heading-color: #FFD600;
+  /* ADDED: Explicit dark mode for calendar-container using variables */
+  .calendar-container {
+    background-color: var(--calendar-bg);
+    border-color: var(--calendar-border-color);
   }
 
+  /* This is the main body styling for dark mode, ensuring it uses variables */
   body {
-    color: #DCE1E7;
-    background-color: #101010;
+    color: var(--primary-text-color-dark);
+    background-color: var(--main-bg-color-dark);
+    background-image: url('./assets/bgkarcher.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
-  .booking-form input:focus {
-    border-color: var(--button-hover-bg, #787878);
-    box-shadow: 0 0 0 3px var(--button-focus-shadow, rgba(255, 214, 0, 0.5));
-  }
-
-  .react-calendar {
-    color: var(--calendar-tile-color);
-  }
-
+  /* Other specific dark mode styles */
   .main-title {
-    color: var(--heading-color, #FFD600);
+    color: var(--main-title-color-dark);
   }
 
-  .subtitle, .instructions {
-    color: var(--text-color-secondary, #C0C0C0);
+  /* MOVED & UPDATED: .subtitle and .instructions from the later, duplicate media query */
+  .subtitle {
+    color: var(--subtitle-color-dark);
   }
-}
+  .instructions {
+    color: var(--instructions-color-dark);
+  }
+
+  /* Ensure other specific dark styles are using the new variables if they existed */
+  /* For example, toggle switches, info messages, etc. */
+
+} /* End of the main @media (prefers-color-scheme: dark) block */
 
 /* New Toggle Switch Styles */
 .toggle-option {
@@ -504,11 +561,6 @@ body {
   font-size: 0.95em;
 }
 
-/* --- Dark Mode Adjustments --- */
-@media (prefers-color-scheme: dark) {
-    /* Add any other specific overrides if react-calendar's defaults conflict */
-}
-
 /* Styles for Day Selection Buttons */
 .days-buttons-container {
     display: flex;
@@ -532,29 +584,25 @@ body {
 .day-button:hover {
     border-color: var(--button-hover-bg, #787878);
     background-color: #f0f0f0; /* Light hover background */
+    color: var(--form-input-color, #1E1E1E); /* Ensure text color contrast on hover */
 }
 
-.day-button.active {
+/* Explicit focus style for day buttons - only outline */
+.day-button:focus {
+    outline: 2px solid var(--button-hover-bg, #787878); /* Example focus outline */
+    outline-offset: 1px;
+    /* No background-color here to avoid conflict; rely on .active for selected state background */
+}
+
+/* When a button is active, its styles should be dominant, even if focused or hovered */
+.day-button.active,
+.day-button.active:focus,
+.day-button.active:hover {
     background-color: var(--calendar-tile-active-bg, #FFD600); /* Safety Yellow */
     color: var(--form-input-color-dark, #1E1E1E); /* Charcoal Black for text contrast */
     border-color: var(--calendar-tile-active-bg, #FFD600);
     font-weight: bold;
-}
-
-/* Dark mode adjustments for day buttons */
-@media (prefers-color-scheme: dark) {
-    .day-button:hover {
-        border-color: var(--button-hover-bg, #787878);
-        background-color: var(--button-bg, #4A4A4A); /* Dark Grey */
-    }
-    .day-button.active {
-       /* Colors already defined using variables work for dark mode */
-    }
-}
-
-/* Style the label that acts as the switch */
-.switch-label {
-
+    outline: none; /* Remove focus outline if it's active, active state is clear enough */
 }
 
 /* Apply similar styling to textarea */
@@ -567,7 +615,7 @@ body {
     font-size: 1em;
     font-family: inherit; /* Ensure consistent font */
     transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: var(--form-input-bg, #fff);
+    background-color: #2C2C2C;
     color: var(--form-input-color, #333);
     resize: vertical; /* Allow vertical resize, disable horizontal */
 }
@@ -638,4 +686,174 @@ body {
     .subtitle, .instructions {
         color: var(--info-box-text-color, #DCE1E7); /* Apply dark mode text color */
     }
+}
+
+/* General Responsive Adjustments */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .app-container {
+    padding: 1.5rem 0.5rem;
+    gap: 1rem;
+    padding-bottom: 80px; /* Added space for floating buttons */
+  }
+
+  .calendar-container,
+  .booking-form-container {
+    padding: 1rem;
+  }
+
+  .react-calendar__tile {
+    height: 40px;
+    font-size: 0.85em;
+  }
+
+  .booking-form h3 {
+    font-size: 1.2em;
+  }
+
+  .booking-form label {
+    font-size: 0.8em;
+  }
+
+  .booking-form input,
+  .booking-form button:not(.day-button),
+  .booking-form textarea {
+    padding: 0.7em 1em;
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 480px) {
+  #root {
+    padding: 0.5rem;
+  }
+  
+  .app-container {
+    padding: 1rem 0.25rem;
+    margin: 0.5rem auto;
+    padding-bottom: 100px; /* Increased space for floating buttons on smaller screens */
+  }
+
+  .app-container h1 {
+    font-size: 1.8em; /* Example: Adjust title font size for very small screens */
+  }
+  
+  .subtitle, .instructions { /* Assuming these classes exist based on outline */
+    font-size: 0.9em;
+  }
+
+  .calendar-container,
+  .booking-form-container {
+    max-width: 100%; /* Allow them to take full width if needed */
+    padding: 0.75rem;
+    border-radius: 8px; /* Slightly smaller border radius */
+  }
+
+  .react-calendar__navigation button {
+    min-width: 30px;
+    padding: 8px 3px;
+    font-size: 1em;
+  }
+  
+  .react-calendar__navigation button.react-calendar__navigation__label {
+    font-size: 1.1em;
+  }
+
+  .react-calendar__tile {
+    height: 35px;
+    font-size: 0.8em;
+  }
+  
+  .react-calendar__month-view__weekdays__weekday abbr {
+    font-size: 0.8em;
+  }
+
+  .booking-form h3 {
+    font-size: 1.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .booking-form label {
+    font-size: 0.75em;
+    margin-bottom: 0.3rem;
+  }
+
+  .booking-form input,
+  .booking-form button:not(.day-button),
+  .booking-form textarea {
+    padding: 0.6em 0.8em;
+    font-size: 0.9em;
+  }
+
+  .booking-form button {
+    font-size: 1em;
+  }
+  
+  /* Adjustments for specific elements if they cause overflow or are too small */
+  .main-title { /* Assuming this class exists based on outline */
+      font-size: 2em; 
+  }
+}
+
+/* Ensure your existing color scheme media queries are not overridden or placed correctly */
+/* For example, they might need to be outside or inside these responsive queries,
+   or specific overrides might be needed within responsive queries if context demands it */
+
+/* Styles for Terms and Conditions Checkbox */
+.terms-checkbox-container {
+  display: flex;
+  align-items: center; /* Vertically align checkbox and label */
+  margin-top: 1rem; /* Space above the checkbox section */
+  margin-bottom: 1.5rem; /* Space below checkbox section, before the button */
+  text-align: left; /* Align text to left */
+}
+
+.terms-checkbox-container input[type="checkbox"] {
+  margin-right: 0.75rem; /* Space between checkbox and label */
+  width: 18px; /* Custom width */
+  height: 18px; /* Custom height */
+  cursor: pointer;
+  accent-color: var(--accent-color-dark, #FFD600); /* Use theme accent for checkbox color */
+}
+
+.terms-checkbox-container label {
+  font-size: 0.9em; /* Adjust font size as needed */
+  color: var(--form-label-color, #555); /* Use form label color variable */
+  margin-bottom: 0; /* Override default label margin if any */
+  cursor: pointer;
+}
+
+/* Style for the clickable link within the terms label */
+.terms-link {
+  color: var(--link-color-dark, #FFD600); /* Use a theme link color, fallback to accent */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.terms-link:hover {
+  text-decoration: none;
+}
+
+/* Apply similar styling to textarea */
+.booking-form textarea {
+    width: 100%;
+    padding: 0.8em 1em;
+    border: 1px solid var(--form-input-border-color, #ccc);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: inherit; /* Ensure consistent font */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #2C2C2C;
+    color: var(--form-input-color, #333);
+    resize: vertical; /* Allow vertical resize, disable horizontal */
+}
+
+.booking-form textarea:focus {
+    border-color: var(--button-hover-bg, #4A4A4A);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--button-focus-shadow, rgba(255, 214, 0, 0.4));
 }
