@@ -1,0 +1,55 @@
+:root {
+  --info-btn-bg: var(--calendar-tile-active-bg, #FFD600); /* Use existing variable for consistency */
+  --info-btn-color: var(--form-input-color-dark, #1E1E1E); /* Use existing variable */
+  --info-btn-shadow: rgba(0, 0, 0, 0.2);
+  --info-btn-hover-bg: #FFC107; /* Slightly darker yellow for hover */
+}
+
+.floating-info-btn {
+  position: fixed;
+  bottom: 38px; /* ADJUSTED for vertical centering with FloatingTotal */
+  right: 230px;
+  background-color: var(--info-btn-bg);
+  color: var(--info-btn-color);
+  border: none;
+  border-radius: 50%;
+  width: 50px; 
+  height: 50px;
+  padding: 0; /* Remove default padding if icon is centered via flex */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--info-btn-shadow);
+  cursor: pointer;
+  z-index: 999; /* Below modal, but above most content */
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.floating-info-btn svg {
+  width: 28px; /* Adjust icon size as needed */
+  height: 28px;
+}
+
+.floating-info-btn:hover {
+  background-color: var(--info-btn-hover-bg);
+  transform: scale(1.05) translateY(-3px);
+}
+
+.floating-info-btn:focus {
+  outline: 2px solid var(--info-btn-hover-bg);
+  outline-offset: 2px;
+}
+
+/* Adjust position for smaller screens if needed */
+@media (max-width: 768px) {
+  .floating-info-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 40px; /* ADJUSTED for vertical centering on mobile */
+    right: 190px;
+  }
+  .floating-info-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+} 

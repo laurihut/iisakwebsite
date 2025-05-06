@@ -15,6 +15,7 @@ function BookingForm({
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
   const [extraInfo, setExtraInfo] = useState('');
+  const [showDetergentInfo, setShowDetergentInfo] = useState(false);
 
   const [formError, setFormError] = useState('');
 
@@ -58,7 +59,7 @@ function BookingForm({
   return (
     <form onSubmit={handleSubmit} className="booking-form">
       <h3>Kirjoita yhteystiedot ja valitse päivä</h3>
-      <p>Alkaa: {selectedDate.toLocaleDateString()}</p>
+      <p>Vuokraus alkaa: {selectedDate.toLocaleDateString()} kello 17</p>
       {formError && <p className="error-message" style={{ textAlign: 'center' }}>{formError}</p>}
 
       <div>
@@ -131,8 +132,53 @@ function BookingForm({
 
       {/* Toggle Switch - Use prop and callback */}
       <div className="detergent-option toggle-option">
-        <div>
-          <label htmlFor="detergentToggle">Tarvitsetko pesuaineen?</label>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+          <label htmlFor="detergentToggle" style={{ marginRight: '6px' }}>Tarvitsetko pesuaineen?</label>
+          <span
+            onMouseEnter={() => setShowDetergentInfo(true)}
+            onMouseLeave={() => setShowDetergentInfo(false)}
+            style={{
+              position: 'relative',
+              marginLeft: '4px',
+              marginBottom: '10px',
+              cursor: 'pointer',
+              border: '1px solid #aaa',
+              borderRadius: '50%',
+              width: '10px',
+              height: '10px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '10px',
+              fontWeight: 'bold',
+              color: '#555',
+              backgroundColor: '#f0f0f0'
+            }}
+          >
+            i
+            {showDetergentInfo && (
+              <span style={{
+                position: 'absolute',
+                bottom: '135%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: '#333',
+                color: 'white',
+                padding: '8px 12px',
+                borderRadius: '6px',
+                fontSize: '12px',
+                lineHeight: '1.4',
+                textAlign: 'center',
+                whiteSpace: 'normal',
+                width: '220px',
+                zIndex: 1001,
+                boxShadow: '0 3px 8px rgba(0,0,0,0.3)',
+                pointerEvents: 'none'
+              }}>
+                6 euron pesuaine sisältää 16 litraa pesunestettä, eli kaksi täyttä astiallista
+              </span>
+            )}
+          </span>
         </div>
         <div>
           <input

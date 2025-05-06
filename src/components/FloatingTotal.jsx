@@ -3,6 +3,7 @@ import './FloatingTotal.css'; // We'll create this CSS file next
 
 function FloatingTotal({ totalCost }) {
   const [isFlashing, setIsFlashing] = useState(false);
+  const [showVatInfo, setShowVatInfo] = useState(false); // State for VAT tooltip
   const isInitialMount = useRef(true); // Ref to track initial mount
 
   useEffect(() => {
@@ -36,12 +37,45 @@ function FloatingTotal({ totalCost }) {
   }
 
   return (
-    <div className="floating-total-container">
-      <span className="total-label">Summa:</span>
-      {/* Conditionally apply the flash class */}
-      <span className={`total-amount ${isFlashing ? 'flash-active' : ''}`}>
-        {totalCost} €
-      </span>
+    <div 
+      className="floating-total-container"
+    >
+      <div 
+        className="floating-total-inner-wrapper"
+        onMouseEnter={() => setShowVatInfo(true)}
+        onMouseLeave={() => setShowVatInfo(false)}
+        style={{ 
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'inherit'
+        }}
+      >
+        <span className="total-label">Summa:</span>
+        {/* Conditionally apply the flash class */}
+        <span className={`total-amount ${isFlashing ? 'flash-active' : ''}`}>
+          {totalCost} €
+        </span>
+        {showVatInfo && (
+          <span style={{
+            position: 'absolute',
+            bottom: '110%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: '#333',
+            color: 'white',
+            padding: '6px 10px',
+            borderRadius: '4px',
+            fontSize: '12px',
+            whiteSpace: 'nowrap',
+            zIndex: 1001,
+            boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
+            pointerEvents: 'none'
+          }}>
+            Hinta sisältää ALV 25,5%
+          </span>
+        )}
+      </div>
     </div>
   );
 }
