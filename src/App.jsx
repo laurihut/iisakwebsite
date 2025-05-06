@@ -7,6 +7,8 @@ import BookingForm from './components/BookingForm';
 import useBookings from './hooks/useBookings';
 import { addBooking } from './services/firestoreService'; // Import the booking function
 import FloatingTotal from './components/FloatingTotal'; // Import new component
+import FloatingInfoButton from './components/FloatingInfoButton'; // Import new component
+import InfoModal from './components/InfoModal'; // Import new component
 
 function App() {
   // Get state and functions from the updated hook
@@ -25,6 +27,7 @@ function App() {
   const [numberOfDays, setNumberOfDays] = useState(1);
   const [detergent, setDetergent] = useState(false);
   const [totalCost, setTotalCost] = useState(0); // State for the calculated cost
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false); // State for the info modal
 
   // Remove selectedSlot state - ALREADY DONE
 
@@ -36,7 +39,7 @@ function App() {
         cost += (numberOfDays - 1) * 10; // Add 10 for each extra day
     }
     if (detergent) {
-        cost += 15; // Add detergent cost
+        cost += 6; // Add detergent cost
     }
     setTotalCost(cost);
   }, [numberOfDays, detergent]);
@@ -105,8 +108,15 @@ function App() {
       {/* Wrap subtitle and instructions */}
       <div className="info-box">
         <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 15 €)</h2>
+        <br></br>
         <p className="instructions">VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA.</p>
       </div>
+
+      {/* Floating Info Button */}
+      <FloatingInfoButton onClick={() => setIsInfoModalOpen(true)} />
+
+      {/* Info Modal */}
+      <InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
 
       {/* Basic Date Selection - Replace with a proper calendar UI later */}
       {/* <div className="date-selector">
