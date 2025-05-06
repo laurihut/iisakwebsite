@@ -107,7 +107,7 @@ function App() {
       <h1 className="main-title">IISAKIN TEKSTIILIPESURI</h1>
       {/* Wrap subtitle and instructions */}
       <div className="info-box">
-        <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 15 €)</h2>
+        <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
         <br></br>
         <p className="instructions">VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA.</p>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TermsModal from './TermsModal'; // Import the new TermsModal component
 
 // Accept props including lifted state and callbacks
 function BookingForm({
@@ -16,8 +17,15 @@ function BookingForm({
   const [phone, setPhone] = useState('');
   const [extraInfo, setExtraInfo] = useState('');
   const [showDetergentInfo, setShowDetergentInfo] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false); // State for terms modal visibility
 
   const [formError, setFormError] = useState('');
+
+  const openTermsModal = (e) => {
+    e.preventDefault(); // Prevent label click from toggling checkbox if link is part of label
+    setIsTermsModalOpen(true);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +49,11 @@ function BookingForm({
     const emailRegex = /^\S+@\S+\.\S+$/;
     if (!emailRegex.test(email)) {
       setFormError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!termsAccepted) {
+      setFormError('Ole hyvä ja hyväksy vuokrausehdot jatkaaksesi.');
       return;
     }
 
@@ -168,14 +181,15 @@ function BookingForm({
                 borderRadius: '6px',
                 fontSize: '12px',
                 lineHeight: '1.4',
-                textAlign: 'center',
+                textAlign: 'left',
                 whiteSpace: 'normal',
                 width: '220px',
                 zIndex: 1001,
                 boxShadow: '0 3px 8px rgba(0,0,0,0.3)',
                 pointerEvents: 'none'
               }}>
-                6 euron pesuaine sisältää 16 litraa pesunestettä, eli kaksi täyttä astiallista
+                6 euron pesuaine sisältää 16 litraa pesunestettä, eli kaksi täyttä astiallista. 
+                Mikäli luulet tarvitsevasi enemmän, kirjoita se lisätietojen kenttään.
               </span>
             )}
           </span>
@@ -203,7 +217,28 @@ function BookingForm({
           ></textarea>
       </div>
 
-      <button type="submit">Varaa nyt</button>
+      {/* Terms and Conditions Checkbox */}
+      <div className="terms-checkbox-container">
+        <input 
+          type="checkbox" 
+          id="termsAccepted"
+          checked={termsAccepted}
+          onChange={(e) => setTermsAccepted(e.target.checked)}
+        />
+        <label htmlFor="termsAccepted">
+          Olen lukenut ja hyväksyn <a href="#" onClick={openTermsModal} className="terms-link">vuokrausehdot</a>
+        </label>
+      </div>
+
+      <button 
+        style={{ backgroundColor: termsAccepted ? '#ffbb00' : '#C0C0C0', color: '#1a1a1a' }} 
+        type="submit" 
+        disabled={!termsAccepted} >
+          Varaa nyt
+      </button>
+
+      {/* Terms Modal Component */}
+      <TermsModal isOpen={isTermsModalOpen} onClose={() => setIsTermsModalOpen(false)} />
     </form>
   );
 }

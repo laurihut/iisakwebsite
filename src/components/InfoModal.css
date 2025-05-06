@@ -5,8 +5,8 @@
   --modal-heading-color: var(--heading-color, #1E1E1E);
   --modal-border-color: var(--calendar-border-color, #eee);
   --modal-shadow: rgba(0, 0, 0, 0.15);
-  --modal-close-btn-color: #777;
-  --modal-close-btn-hover-color: #333;
+  --modal-close-btn-color: #FFD600;
+  --modal-close-btn-hover-color: #FFD600;
   --modal-link-color: var(--link-color, #007bff); /* Assuming a general link color, adjust if needed */
 }
 
@@ -111,4 +111,34 @@
      /* background-color: var(--modal-bg-dark, #2c2c2c); */
   }
   /* Add other specific dark mode overrides if necessary */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .info-modal-overlay {
+    padding: 0.5rem; /* Reduce padding for the overlay */
+  }
+
+  .info-modal-content {
+    padding: 1.5rem; /* Reduce padding inside the modal */
+    max-height: 90vh; /* Allow slightly more height if needed */
+    color: #e6f7ff;
+  }
+
+  .info-modal-content h2 {
+    font-size: clamp(1.3rem, 5vw, 1.6rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .info-modal-content li,
+  .info-modal-content p {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .info-modal-close-btn {
+    top: 10px;
+    right: 10px;
+    font-size: 1.8rem; /* Slightly smaller close icon */
+  }
 } 
