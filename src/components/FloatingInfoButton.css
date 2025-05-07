@@ -1,8 +1,7 @@
 :root {
-  --info-btn-bg: var(--calendar-tile-active-bg, #FFD600); /* Use existing variable for consistency */
-  --info-btn-color: var(--form-input-color-dark, #1E1E1E); /* Use existing variable */
-  --info-btn-shadow: rgba(0, 0, 0, 0.2);
-  --info-btn-hover-bg: #FFC107; /* Slightly darker yellow for hover */
+  --info-btn-bg: #bda000; /* Dark background to match the theme */
+  --info-btn-shadow: rgba(0, 0, 0, 0.3);
+  --info-btn-hover-bg: #2C2C2C; /* Slightly lighter dark for hover */
 }
 
 .floating-info-btn {
@@ -10,7 +9,6 @@
   bottom: 38px; /* ADJUSTED for vertical centering with FloatingTotal */
   right: 230px;
   background-color: var(--info-btn-bg);
-  color: var(--info-btn-color);
   border: none;
   border-radius: 50%;
   width: 50px; 
@@ -25,7 +23,7 @@
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.floating-info-btn svg {
+.floating-info-btn img {
   width: 28px; /* Adjust icon size as needed */
   height: 28px;
 }
@@ -36,7 +34,7 @@
 }
 
 .floating-info-btn:focus {
-  outline: 2px solid var(--info-btn-hover-bg);
+  outline: 2px solid #FFD600;
   outline-offset: 2px;
 }
 
@@ -48,7 +46,7 @@
     bottom: 40px; /* ADJUSTED for vertical centering on mobile */
     right: 190px; /* May still be too large for very small screens */
   }
-  .floating-info-btn svg {
+  .floating-info-btn img {
     width: 24px;
     height: 24px;
   }
@@ -63,7 +61,7 @@
     right: 175px; /* Positioned to the left of an assumed FloatingTotal button */
                   /* (FloatingTotal right: 15px + ~150px width + 10px spacing) */
   }
-  .floating-info-btn svg {
+  .floating-info-btn img {
     width: 22px;
     height: 22px;
   }

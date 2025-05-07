@@ -194,9 +194,11 @@ function App() {
       <h1 className="main-title">IISAKIN TEKSTIILIPESURI</h1>
       {/* Wrap subtitle and instructions */}
       <div className="info-box">
-        <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
+        <p className="instructions">
+          VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA <span style={{color: '#FFD600'}}>KÄRCHER PUZZI 8/1</span> TEKSTIILIPESURI.
+        </p>
         <br></br>
-        <p className="instructions">VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA KÄRCHER PUZZI 8/1 TEKSTIILIPESURI.</p>
+        <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
       </div>
 
       {/* Floating Info Button */}
