@@ -299,7 +299,7 @@ body {
     --calendar-nav-disabled-color: #555;
     --calendar-weekday-color: #AAAAAA;
     --calendar-tile-color: #DCE1E7;
-    --calendar-tile-hover-bg: #003366; /* A distinct hover for dark mode */
+    --calendar-tile-hover-bg: #f0bb0c; /* A distinct hover for dark mode */
     --calendar-tile-hover-color: #FFFFFF;
     --calendar-tile-disabled-bg: #2a2a2a;
     --calendar-tile-disabled-color: #555;
@@ -616,7 +616,7 @@ body {
     font-family: inherit; /* Ensure consistent font */
     transition: border-color 0.2s, box-shadow 0.2s;
     background-color: #2C2C2C;
-    color: var(--form-input-color, #333);
+    color: var(--form-input-color, #d3d3d3);
     resize: vertical; /* Allow vertical resize, disable horizontal */
 }
 
@@ -848,7 +848,7 @@ body {
     font-family: inherit; /* Ensure consistent font */
     transition: border-color 0.2s, box-shadow 0.2s;
     background-color: #2C2C2C;
-    color: var(--form-input-color, #333);
+    color: var(--form-input-color, #d3d3d3);
     resize: vertical; /* Allow vertical resize, disable horizontal */
 }
 
