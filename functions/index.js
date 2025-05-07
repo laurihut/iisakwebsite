@@ -272,7 +272,6 @@
                     <li><strong>Lisätiedot:</strong> ${extraInfo || 'Ei lisätietoja'}</li>
                     <li><strong>Kokonaishinta:</strong> ${totalCost} € (sis. ALV 25,5%)</li>
                   </ul>
-                  <p>Alla näet varauksesi tiedot.</p>
                   <h3>Nouto- ja palautusohjeet:</h3>
                   <p>Pesuri sijaitsee Oulunkylässä osoitteessa: <strong>Pellavapellontie 7A, 00650 Helsinki</strong>.</p>
                   <p>Muistathan palauttaa pesurin sovittuun aikaan mennessä siistissä kunnossa, puhdistettuna ja kaikki osat tallella.</p>
