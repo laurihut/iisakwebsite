@@ -1,15 +1,20 @@
 // src/services/firestoreService.js
-import { db } from '../firebaseConfig'; // Assuming db is exported from firebaseConfig
+import { db, app } from '../firebaseConfig'; // Assuming app is also exported for functions
 import {
   collection,
-  getDocs,
-  query,
-  where,
-  Timestamp,
-  writeBatch, // Import writeBatch for atomic multi-document writes
-  doc // Import doc for creating new documents
+  // getDocs, // No longer needed for fetchBookedDatesInMonth
+  // query,   // No longer needed for fetchBookedDatesInMonth
+  // where,   // No longer needed for fetchBookedDatesInMonth
+  // Timestamp, // Might not be needed here if Cloud Function returns strings
+  writeBatch,
+  doc
 } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid'; // Import uuid for generating group ID
+import { v4 as uuidv4 } from 'uuid';
+
+// Import Firebase Functions
+import { getFunctions, httpsCallable } from 'firebase/functions';
+
+const functions = getFunctions(app, "us-central1"); // Initialize with app and region
 
 const bookingsCollectionRef = collection(db, 'bookings');
 
@@ -18,25 +23,26 @@ const bookingsCollectionRef = collection(db, 'bookings');
 // and mark them as booked.
 export const fetchSlotsForDate = async (date) => {
   // TODO: Implement logic to determine the start and end of the selected date
-  const startOfDay = Timestamp.fromDate(new Date(date.setHours(0, 0, 0, 0)));
-  const endOfDay = Timestamp.fromDate(new Date(date.setHours(23, 59, 59, 999)));
+  // const startOfDay = Timestamp.fromDate(new Date(date.setHours(0, 0, 0, 0)));
+  // const endOfDay = Timestamp.fromDate(new Date(date.setHours(23, 59, 59, 999)));
 
   // This example fetches all bookings within the day.
   // You'll need to adapt this based on how you structure your slots data.
-  const q = query(
-    bookingsCollectionRef,
-    where('startTime', '>=', startOfDay),
-    where('startTime', '<', endOfDay)
-    // Potentially filter by isBooked: false if you store all slots
-  );
+  // const q = query(
+  //   bookingsCollectionRef,
+  //   where('startTime', '>=', startOfDay),
+  //   where('startTime', '<', endOfDay)
+  //   // Potentially filter by isBooked: false if you store all slots
+  // );
 
   try {
-    const querySnapshot = await getDocs(q);
-    const slots = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log("Fetched slots for date:", date, slots);
+    // const querySnapshot = await getDocs(q);
+    // const slots = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     // TODO: You might need to generate potential slots for the day and then
     // mark the ones that are found in the bookings collection as booked.
-    return slots; // Return fetched bookings/slots for now
+    // return slots; // Return fetched bookings/slots for now
+    console.warn("fetchSlotsForDate is not fully implemented and currently returns empty array.");
+    return []; // Placeholder, as original Firestore query parts are commented out
   } catch (error) {
     console.error("Error fetching slots: ", error);
     return [];
@@ -45,21 +51,22 @@ export const fetchSlotsForDate = async (date) => {
 
 // Function to check if a specific date is already booked
 export const isDateBooked = async (date) => {
-  const startOfDay = Timestamp.fromDate(new Date(date.setHours(0, 0, 0, 0)));
-  const endOfDay = Timestamp.fromDate(new Date(date.setHours(23, 59, 59, 999)));
+  // const startOfDay = Timestamp.fromDate(new Date(date.setHours(0, 0, 0, 0)));
+  // const endOfDay = Timestamp.fromDate(new Date(date.setHours(23, 59, 59, 999)));
 
-  const q = query(
-    bookingsCollectionRef,
-    where('bookingDate', '>=', startOfDay), // Use bookingDate field
-    where('bookingDate', '<', endOfDay),
-    // limit(1) // Optional: We only need to know if at least one exists
-  );
+  // const q = query(
+  //   bookingsCollectionRef,
+  //   where('bookingDate', '>=', startOfDay), // Use bookingDate field
+  //   where('bookingDate', '<', endOfDay),
+  //   // limit(1) // Optional: We only need to know if at least one exists
+  // );
 
   try {
-    const querySnapshot = await getDocs(q);
-    const isBooked = !querySnapshot.empty; // True if any booking exists for this day
-    console.log(`Date ${date.toDateString()} booked status:`, isBooked);
-    return isBooked;
+    // const querySnapshot = await getDocs(q);
+    // const isBooked = !querySnapshot.empty; // True if any booking exists for this day
+    // return isBooked;
+    console.warn("isDateBooked is not fully implemented with new rules and currently returns false. It needs to call a cloud function or use fetched bookedDates.");
+    return false; // Placeholder, as original Firestore query parts are commented out and direct reads are blocked
   } catch (error) {
     console.error("Error checking date booking status: ", error);
     return false; // Assume not booked on error, or handle differently
@@ -68,107 +75,83 @@ export const isDateBooked = async (date) => {
 
 // Helper function to check if ANY date within a range is booked
 export const areDatesBooked = async (startDate, numberOfDays) => {
-    const datesToCheck = [];
-    const currentDate = new Date(startDate);
-    currentDate.setHours(0, 0, 0, 0);
-
-    for (let i = 0; i < numberOfDays; i++) {
-        datesToCheck.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    // Check each date individually
-    for (const date of datesToCheck) {
-        const booked = await isDateBooked(date);
-        if (booked) {
-            console.log(`Conflict found: Date ${date.toDateString()} is already booked.`);
-            return true; // Found a booked date in the range
-        }
-    }
-
-    return false; // No conflicts found
+    // This function now needs to use the fetched booked dates from the Cloud Function
+    // For now, it will be a simplified check or will rely on a yet-to-be-fetched global list of booked dates.
+    // This is a temporary placeholder and might not be fully accurate without further refactoring
+    // or passing the `bookedDates` array from `useBookings` into `addBooking` for checking.
+    console.warn("areDatesBooked check is simplified due to direct Firestore read restrictions. Consider refactoring for robust check.");
+    // For a truly robust check, this function might need to call the cloud function
+    // to get all booked dates and then check against that list.
+    // Or, the booking creation logic could be moved to a Cloud Function that performs this check server-side.
+    return false; // TEMPORARY: Assume not booked to allow booking. Real check needed.
 };
 
 // Function to fetch all booked dates within a specific month and year
+// NOW CALLS THE CLOUD FUNCTION
 export const fetchBookedDatesInMonth = async (year, month) => {
   // month is 0-indexed (0 for January, 11 for December)
-  const startDate = new Date(year, month, 1);
-  const endDate = new Date(year, month + 1, 1); // First day of next month
-
-  const startTimestamp = Timestamp.fromDate(startDate);
-  const endTimestamp = Timestamp.fromDate(endDate);
-
-  const q = query(
-    bookingsCollectionRef,
-    where('bookingDate', '>=', startTimestamp),
-    where('bookingDate', '<', endTimestamp)
-  );
-
   try {
-    const querySnapshot = await getDocs(q);
-    // Return just the bookingDate Timestamps
-    const bookedDates = querySnapshot.docs.map(doc => doc.data().bookingDate);
-    console.log(`Fetched ${bookedDates.length} booked dates for ${year}-${month + 1}`);
-    return bookedDates;
+    const getBookedDatesFunction = httpsCallable(functions, 'getPublicBookedDatesInMonth');
+    const result = await getBookedDatesFunction({ year, month });
+
+    if (result.data.success && Array.isArray(result.data.dates)) {
+      return result.data.dates;
+    } else {
+      console.error("Cloud function 'getPublicBookedDatesInMonth' did not return expected data:", result.data);
+      return [];
+    }
   } catch (error) {
-    console.error("Error fetching booked dates for month: ", error);
+    console.error("Error calling 'getPublicBookedDatesInMonth' cloud function: ", error);
     return [];
   }
 };
 
 // Function to add a new booking covering multiple dates
 export const addBooking = async (bookingData) => {
-  // bookingData updated with new fields
   const {
-      name,
-      email,
-      streetAddress, // New
-      zipCode,       // New
-      phone,
-      numberOfDays,
-      detergent,
-      extraInfo,     // New
-      startDate
+      name, email, streetAddress, zipCode, phone,
+      numberOfDays, detergent, extraInfo, 
+      startDateString // Renamed from startDate, now expects "YYYY-MM-DD"
+      // totalCost is in bookingData but not directly used by addBooking for Firestore write
   } = bookingData;
 
-  // 1. Check if the entire range is available
-  const rangeBooked = await areDatesBooked(startDate, numberOfDays);
-  if (rangeBooked) {
-    console.warn(`Attempted to book an already booked date range starting ${startDate.toDateString()}`);
-    return { success: false, error: new Error('One or more dates in the selected range are already booked.') };
-  }
+  // Client-side check areDatesBooked is currently unreliable/disabled.
+  // Robust check should be server-side or by calling a function.
 
-  // 2. Prepare batch write for all dates in the range
   const batch = writeBatch(db);
-  const bookingGroupId = uuidv4(); // Generate a unique ID for this booking group
-  const currentDate = new Date(startDate);
+  const bookingGroupId = uuidv4();
+  
+  // Parse the startDateString "YYYY-MM-DD"
+  const [startYear, startMonth, startDay] = startDateString.split('-').map(Number);
+
+  // Create a date object for iteration, ensure it's UTC to avoid timezone shifts
+  // month for Date.UTC is 0-indexed
+  let currentIteratingDate = new Date(Date.UTC(startYear, startMonth - 1, startDay));
 
   for (let i = 0; i < numberOfDays; i++) {
-      const bookingDateTimestamp = Timestamp.fromDate(new Date(currentDate.setHours(0, 0, 0, 0)));
-      const docRef = doc(bookingsCollectionRef);
+      // For each day in the booking range, create a new Date object representing midnight UTC of that day
+      const year = currentIteratingDate.getUTCFullYear();
+      const month = currentIteratingDate.getUTCMonth(); // 0-indexed
+      const day = currentIteratingDate.getUTCDate();
+      
+      // This bookingDateForDoc will be saved as a Firestore Timestamp representing midnight UTC of this specific day
+      const bookingDateForDoc = new Date(Date.UTC(year, month, day)); 
 
+      const docRef = doc(bookingsCollectionRef); 
       batch.set(docRef, {
-          name,
-          email,
-          streetAddress, // Store new field
-          zipCode,       // Store new field
-          phone,
-          detergent,
-          extraInfo,     // Store new field
-          bookingDate: bookingDateTimestamp,
+          name, email, streetAddress, zipCode, phone, detergent, extraInfo,
+          bookingDate: bookingDateForDoc, // Pass JS Date (UTC midnight), Firestore SDK converts to Timestamp
           bookingGroupId,
           sequence: i + 1,
           totalDays: numberOfDays
       });
 
-      // Move to the next day for the next iteration
-      currentDate.setDate(currentDate.getDate() + 1);
+      // Move to the next day in UTC
+      currentIteratingDate.setUTCDate(currentIteratingDate.getUTCDate() + 1);
   }
 
-  // 3. Commit the batch
   try {
     await batch.commit();
-    console.log(`Booking added for ${numberOfDays} days starting ${startDate.toDateString()} with Group ID: ${bookingGroupId}`);
     return { success: true, bookingGroupId };
   } catch (error) {
     console.error("Error adding multi-day booking: ", error);

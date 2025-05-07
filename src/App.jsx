@@ -13,9 +13,7 @@ import InfoModal from './components/InfoModal'; // Import new component
 function App() {
   // Get state and functions from the updated hook
   const {
-    selectedDate,
-    setSelectedDate,
-    bookedDates, // YYYY-MM-DD strings
+    bookedDates,
     isLoading,
     error,
     activeStartDate,
@@ -28,8 +26,7 @@ function App() {
   const [detergent, setDetergent] = useState(false);
   const [totalCost, setTotalCost] = useState(0); // State for the calculated cost
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false); // State for the info modal
-
-  // Remove selectedSlot state - ALREADY DONE
+  const [selectedDateString, setSelectedDateString] = useState(null); // Store as YYYY-MM-DD string
 
   // --- Calculate Total Cost --- 
   useEffect(() => {
@@ -44,62 +41,68 @@ function App() {
     setTotalCost(cost);
   }, [numberOfDays, detergent]);
 
-  const handleBookingSubmit = async (formData) => {
-    // formData includes { name, email, address, phone, numberOfDays, detergent }
-    if (!selectedDate) {
+  const handleBookingSubmit = async (formDataFromBookingForm) => {
+    if (!selectedDateString) {
         alert('Something went wrong, no date selected.');
         return;
     }
 
-    // Combine form data with lifted state and selected start date
-    const fullBookingData = {
-        ...formData, // name, email, streetAddress, zipCode, phone, extraInfo
-        numberOfDays,
-        detergent,
-        startDate: selectedDate
-    };
-    console.log('Submitting booking:', fullBookingData);
+    // formDataFromBookingForm contains: name, email, streetAddress, zipCode, phone, extraInfo
+    // It also contains numberOfDays, detergent, totalCost which were passed to BookingForm
+    // and are also in App.jsx state. We should be consistent.
+    // The Cloud Function for email expects selectedDateString.
+    // addBooking in firestoreService will expect startDateString.
 
-    const result = await addBooking(fullBookingData);
+    const bookingDetailsForService = {
+        ...formDataFromBookingForm, // Includes name, email, etc., and also totalCost, numberOfDays, detergent
+        startDateString: selectedDateString, // Pass the YYYY-MM-DD string
+    };
+
+    // Call addBooking from firestoreService
+    const result = await addBooking(bookingDetailsForService);
 
     if (result.success) {
       alert('Booking successful!');
-      setSelectedDate(null); // Clear selection
-      // Optionally reset form fields (if not done in BookingForm)
-      // setNumberOfDays(1); // Reset days
-      // setDetergent(false); // Reset detergent
+      setSelectedDateString(null); // Clear selection
       refreshBookedDates();
     } else {
       alert(`Booking failed: ${result.error?.message || 'Unknown error'}`);
     }
   };
 
-  // Handler for react-calendar date selection
-  const onDateChange = (newDate) => {
-    // Check if the selected date is already booked before setting it
-    const dateString = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
+  const onDateChange = (newDate) => { // newDate is a JS Date object from react-calendar
+    const year = newDate.getFullYear();
+    const month = String(newDate.getMonth() + 1).padStart(2, '0');
+    const day = String(newDate.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${day}`;
+
     if (bookedDates.includes(dateString)) {
-        setSelectedDate(null); // Don't select if already booked
+        setSelectedDateString(null);
         alert('This date is already booked.');
     } else {
-        setSelectedDate(newDate); // Set the selected date if available
+        setSelectedDateString(dateString);
     }
   };
 
   // Function to disable tiles (dates) in the calendar
   const tileDisabled = ({ date, view }) => {
     if (view === 'month') {
-      // Check if the date is in the past
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Compare dates only
-      if (date < today) {
+      today.setHours(0, 0, 0, 0);
+      if (date < today && date.toDateString() !== today.toDateString()) { // Allow today
           return true;
       }
-      // Check if the date is in our list of booked dates
       const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
       return bookedDates.includes(dateString);
     }
-    return false; // Disable only month view tiles for now
+    return false;
+  };
+  
+  // Helper to convert YYYY-MM-DD string back to Date for react-calendar value prop
+  const getCalendarValue = () => {
+    if (!selectedDateString) return null;
+    const [year, month, day] = selectedDateString.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is 0-indexed for Date constructor
   };
 
   return (
@@ -109,7 +112,7 @@ function App() {
       <div className="info-box">
         <h2 className="subtitle">35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
         <br></br>
-        <p className="instructions">VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA.</p>
+        <p className="instructions">VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA KÄRCHER PUZZI 8/1 TEKSTIILIPESURI.</p>
       </div>
 
       {/* Floating Info Button */}
@@ -134,11 +137,10 @@ function App() {
         {isLoading && <p>Loading availability...</p>}
         <Calendar
           onChange={onDateChange}
-          value={selectedDate}
-          // minDate={new Date()} // Disabled in favor of tileDisabled for past dates
-          tileDisabled={tileDisabled} // Use the function to disable tiles
-          onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)} // Update hook when view changes
-          activeStartDate={activeStartDate} // Control the current view
+          value={getCalendarValue()} // Use helper to convert string to Date for calendar
+          tileDisabled={tileDisabled}
+          onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
+          activeStartDate={activeStartDate}
         />
       </div>
 
@@ -146,22 +148,22 @@ function App() {
       {/* <div className="timeslots-container"> ... </div> */}
 
       {/* Show booking form only when a valid date is selected */}
-      {selectedDate && (
+      {selectedDateString && (
         <div className="booking-form-container">
           <BookingForm
-            selectedDate={selectedDate}
-            onSubmit={handleBookingSubmit}
-            // Pass down state and setters
+            selectedDateString={selectedDateString} // Pass as YYYY-MM-DD string
+            onSubmit={handleBookingSubmit} // This will receive all form data
             numberOfDays={numberOfDays}
             detergent={detergent}
             onNumberOfDaysChange={setNumberOfDays}
             onDetergentChange={setDetergent}
+            totalCost={totalCost}
           />
         </div>
       )}
 
       {/* Floating Total Display - Render only when a date is selected */}
-      {selectedDate && <FloatingTotal totalCost={totalCost} />}
+      {selectedDateString && <FloatingTotal totalCost={totalCost} />}
 
     </div>
   );

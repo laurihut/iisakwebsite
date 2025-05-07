@@ -26,13 +26,13 @@ function PrivacyPolicyModal({ isOpen, onClose }) {
           Y-tunnus: 3522024-9<br />
           {/* [Osoite, jos haluat mainita]<br /> */}
           {/* [Puhelinnumero, jos haluat mainita]<br /> */}
-          Sähköposti: huttulajo@gmail.com
+          Sähköposti: iisakintekstiilipesuri@gmail.com
         </p>
 
         <h3>2. Rekisteristä vastaava yhteyshenkilö</h3>
         <p>
           Lauri Huttunen<br />
-          huttulajo@gmail.com
+          iisakintekstiilipesuri@gmail.com
         </p>
 
         <h3>3. Rekisterin nimi</h3>

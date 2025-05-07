@@ -66,7 +66,7 @@ function TermsModal({ isOpen, onClose }) {
             <li>Myöhemmin tehdyistä peruutuksista tai käyttämättä jätetyistä varauksista ei myönnetä hyvitystä.</li>
           </ul>
           <p>
-            Ilmoita peruutuksesta sähköpostitse (huttulajo@gmail.com) tai tekstiviestillä (040 410 1920).
+            Ilmoita peruutuksesta sähköpostitse (iisakintekstiilipesuri@gmail.com) tai tekstiviestillä (040 410 1920).
           </p>
 
           <h3>3. TUOTTEIDEN PALAUTTAMINEN</h3>
@@ -143,7 +143,7 @@ function TermsModal({ isOpen, onClose }) {
 
           <h3>9. LISÄTIETOJA</h3>
           <p>
-            Lisätietoja vuokraehdoista saat sähköpostitse (huttulajo@gmail.com) 
+            Lisätietoja vuokraehdoista saat sähköpostitse (iisakintekstiilipesuri@gmail.com) 
             tai puhelimitse (040 410 1920).
           </p>
         </div>
