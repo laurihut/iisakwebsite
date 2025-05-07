@@ -277,7 +277,7 @@
                   <p>Pesuri sijaitsee Oulunkylässä osoitteessa: <strong>Pellavapellontie 7A, 00650 Helsinki</strong>.</p>
                   <p>Muistathan palauttaa pesurin sovittuun aikaan mennessä siistissä kunnossa, puhdistettuna ja kaikki osat tallella.</p>
                   <p>Ongelmatilanteissa tai jos haluat muokata varaustasi, ota yhteyttä sähköpostilla <a href="mailto:${currentGmailUser}">${currentGmailUser}</a> tai puhelimitse/tekstiviestillä numeroon 040 410 1920.</p>
-                  <p>Ystävällisin terveisin,<br>Iisaki</p>
+                  <p>Ystävällisin terveisin,<br>Iisak</p>
                 `,
                 attachments: attachments
             };

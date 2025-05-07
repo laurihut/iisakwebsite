@@ -14,9 +14,10 @@ const InfoModal = ({ isOpen, onClose }) => {
         <li>Saat tarkemmat ohjeet sähköpostiisi varausvahvistuksen yhteydessä. Tarkistathan myös roskapostikansion.
             Mikäli haluat muokata varaustasi, ota yhteyttä sähköpostilla tai puhelimitse viestillä (iisakintekstiilipesuri@gmail.com, 040 410 1920).
         </li>
+        <li>Pesurin mukana tulee paperinen eritelty lasku.</li>
         <li>Nouda pesuri klo 17 alkaen ja palauta palautuspäivänä kello 17 mennessä. Voit myös kysyä hakua aiemmin tarvittaessa.</li>
         <li>Palauta pesuri sovittuun aikaan mennessä siistissä kunnossa puhdistettuna ja kaikki osat tallella.</li>
-        <li>Ohjeet pesurin käyttöön löydät laitteen mukana tai [LINKKI OHJEISIIN/OHJESIVU].</li>
+        <li>Ohjeet pesurin käyttöön löydät laitteen mukana tai <a href="https://s1.kaercher-media.com/documents/manuals/html/BTA-5765075-000-04/FI.html#U_32580_1_2023918727127497" target="_blank" rel="noopener noreferrer" style={{color: '#ecb500'}}>ohjeet täältä</a>.</li>
         <li>Pesuaine on tablettimuotoinen ja 2 tablettia riittää täyteen astiaan. Jos ostat pesuaineen, se sisältää 4 tablettia.</li>
         <li>Ongelmatilanteissa ota yhteyttä: iisakintekstiilipesuri@gmail.com tai 040 410 1920.</li>
       </ul>
