@@ -230,7 +230,7 @@
                 const startDateUtc = new Date(Date.UTC(year, monthNum - 1, dayNum));
                 formattedStartDateForEmail = startDateUtc.toLocaleDateString('fi-FI', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
                 const returnDateUtc = new Date(startDateUtc.getTime());
-                returnDateUtc.setUTCDate(startDateUtc.getUTCDate() + numberOfDays - 1);
+                returnDateUtc.setUTCDate(startDateUtc.getUTCDate() + numberOfDays);
                 formattedReturnDateForEmail = returnDateUtc.toLocaleDateString('fi-FI', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
             } catch (e) { console.error("Error formatting dates for email:", e); }
 

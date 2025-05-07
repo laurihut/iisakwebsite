@@ -9,6 +9,7 @@ import { addBooking } from './services/firestoreService'; // Import the booking 
 import FloatingTotal from './components/FloatingTotal'; // Import new component
 import FloatingInfoButton from './components/FloatingInfoButton'; // Import new component
 import InfoModal from './components/InfoModal'; // Import new component
+import Toast from './components/Toast'; // Import Toast component
 
 function App() {
   // Get state and functions from the updated hook
@@ -27,6 +28,23 @@ function App() {
   const [totalCost, setTotalCost] = useState(0); // State for the calculated cost
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false); // State for the info modal
   const [selectedDateString, setSelectedDateString] = useState(null); // Store as YYYY-MM-DD string
+  
+  // Toast notification state
+  const [toast, setToast] = useState({
+    visible: false,
+    message: '',
+    type: 'success' // success, error, warning, info
+  });
+
+  // Show toast notification
+  const showToast = (message, type = 'success') => {
+    setToast({ visible: true, message, type });
+  };
+
+  // Hide toast notification
+  const hideToast = () => {
+    setToast(prev => ({ ...prev, visible: false }));
+  };
 
   // --- Calculate Total Cost --- 
   useEffect(() => {
@@ -48,14 +66,14 @@ function App() {
       if (!isDateRangeValid(selectedDateString, numberOfDays)) {
         // Instead of clearing selection, just reset to 1 day rental
         setNumberOfDays(1);
-        alert('Some days in your selected range are already booked. Rental duration has been changed to 1 day.');
+        showToast('Jotkin valitsemistasi päivistä ovat jo varattuja. Vuokra-aika on muutettu 1 päiväksi.', 'warning');
       }
     }
   }, [numberOfDays, selectedDateString, bookedDates]);
 
   const handleBookingSubmit = async (formDataFromBookingForm) => {
     if (!selectedDateString) {
-        alert('Something went wrong, no date selected.');
+        showToast('Jotain meni pieleen, päivää ei ole valittu.', 'error');
         return;
     }
 
@@ -74,11 +92,11 @@ function App() {
     const result = await addBooking(bookingDetailsForService);
 
     if (result.success) {
-      alert('Booking successful!');
+      showToast('Varaus onnistui! Vahvistussähköposti lähetetty.', 'success');
       setSelectedDateString(null); // Clear selection
       refreshBookedDates();
     } else {
-      alert(`Booking failed: ${result.error?.message || 'Unknown error'}`);
+      showToast(`Varaus epäonnistui: ${result.error?.message || 'Tuntematon virhe'}`, 'error');
     }
   };
 
@@ -119,7 +137,7 @@ function App() {
     // Check if the first day (selected date) is already booked
     if (bookedDates.includes(dateString)) {
         setSelectedDateString(null);
-        alert('This date is already booked.');
+        showToast('Tämä päivä on jo varattu.', 'error');
         return;
     }
 
@@ -129,7 +147,7 @@ function App() {
             // Instead of clearing selection, set the date but change rental to 1 day
             setSelectedDateString(dateString);
             setNumberOfDays(1);
-            alert('Some days in your selected range are already booked. Rental duration has been changed to 1 day.');
+            showToast('Jotkin valitsemistasi päivistä ovat jo varattuja. Vuokra-aika on muutettu 1 päiväksi.', 'warning');
             return;
         }
     }
@@ -187,16 +205,13 @@ function App() {
       {/* Info Modal */}
       <InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
 
-      {/* Basic Date Selection - Replace with a proper calendar UI later */}
-      {/* <div className="date-selector">
-        <label htmlFor="booking-date">Select Date: </label>
-        <input
-          type="date"
-          id="booking-date"
-          value={selectedDate.toISOString().split('T')[0]} // Format date for input
-          onChange={handleDateChange}
-        />
-      </div> */}
+      {/* Toast notification */}
+      <Toast 
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.visible}
+        onClose={hideToast}
+      />
 
       <div className="calendar-container">
         {error && <p className="error-message">Error loading availability: {error}</p>}
@@ -209,9 +224,6 @@ function App() {
           activeStartDate={activeStartDate}
         />
       </div>
-
-      {/* Remove Timeslots container */}
-      {/* <div className="timeslots-container"> ... </div> */}
 
       {/* Show booking form only when a valid date is selected */}
       {selectedDateString && (
