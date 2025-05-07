@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import TermsModal from './TermsModal'; // Import the new TermsModal component
+import { getFunctions, httpsCallable } from "firebase/functions"; // Import Firebase functions
+import { app } from '../firebaseConfig'; // Assuming 'app' is exported from your firebaseConfig
 
 // Accept props including lifted state and callbacks
 function BookingForm({
-    selectedDate,
-    onSubmit,
+    selectedDateString, // Now receives YYYY-MM-DD string
+    onSubmit, // This is handleBookingSubmit from App.jsx
     numberOfDays,
     detergent,
     onNumberOfDaysChange,
-    onDetergentChange
+    onDetergentChange,
+    totalCost
 }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,19 +22,22 @@ function BookingForm({
   const [showDetergentInfo, setShowDetergentInfo] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false); // State for terms modal visibility
+  const [isSendingEmail, setIsSendingEmail] = useState(false); // For loading state
 
   const [formError, setFormError] = useState('');
 
+  const functions = getFunctions(app, "us-central1");
+
   const openTermsModal = (e) => {
-    e.preventDefault(); // Prevent label click from toggling checkbox if link is part of label
+    e.preventDefault();
     setIsTermsModalOpen(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
 
-    if (!selectedDate) {
+    if (!selectedDateString) {
       setFormError('Please select a start date first.');
       return;
     }
@@ -57,22 +63,59 @@ function BookingForm({
       return;
     }
 
-    // Pass only form-specific data. Days/detergent already in App state.
-    onSubmit({
+    setIsSendingEmail(true);
+
+    const bookingDataForEmailAndSubmit = {
         name,
         email,
         streetAddress,
         zipCode,
         phone,
-        extraInfo
-    });
-    // Consider if clearing fields here is desired, or in App.jsx after success
+        extraInfo,
+        selectedDateString: selectedDateString, // Use the YYYY-MM-DD string
+        numberOfDays, // from props
+        detergent,    // from props
+        totalCost     // from props
+    };
+
+    try {
+      const sendBookingEmail = httpsCallable(functions, 'sendBookingConfirmationEmail');
+      const result = await sendBookingEmail(bookingDataForEmailAndSubmit);
+      console.log('Email sent result:', result);
+
+      if (result.data && result.data.error) { // Check for errors from callable function
+        throw new Error(result.data.error.message || 'Failed to send booking email.');
+      }
+      if (!result.data || !result.data.success) {
+        throw new Error('Booking email was not confirmed as sent successfully.');
+      }
+
+      // Call the original onSubmit prop (handleBookingSubmit in App.jsx)
+      // with the full data, including selectedDateString
+      onSubmit(bookingDataForEmailAndSubmit);
+
+    } catch (error) {
+      console.error('Error in BookingForm handleSubmit:', error);
+      setFormError(`Booking process failed: ${error.message}. Please try again or contact support.`);
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  // Function to display the date. selectedDateString is YYYY-MM-DD.
+  const displaySelectedDate = () => {
+    if (!selectedDateString) return '';
+    const [year, month, day] = selectedDateString.split('-').map(Number);
+    // Create a date object just for formatting, ensuring it's treated as local for toLocaleDateString
+    // The actual saving and email sending uses the YYYY-MM-DD string or UTC dates derived from it.
+    const dateToFormat = new Date(year, month - 1, day); // month is 0-indexed
+    return dateToFormat.toLocaleDateString('fi-FI'); // Format for display
   };
 
   return (
     <form onSubmit={handleSubmit} className="booking-form">
       <h3>Kirjoita yhteystiedot ja valitse päivä</h3>
-      <p>Vuokraus alkaa: {selectedDate.toLocaleDateString()} kello 17</p>
+      <p>Vuokraus alkaa: {displaySelectedDate()} kello 17</p>
       {formError && <p className="error-message" style={{ textAlign: 'center' }}>{formError}</p>}
 
       <div>
@@ -233,8 +276,8 @@ function BookingForm({
       <button 
         style={{ backgroundColor: termsAccepted ? '#ffbb00' : '#C0C0C0', color: '#1a1a1a' }} 
         type="submit" 
-        disabled={!termsAccepted} >
-          Varaa nyt
+        disabled={!termsAccepted || isSendingEmail} >
+          {isSendingEmail ? 'Lähetetään...' : 'Varaa nyt'}
       </button>
 
       {/* Terms Modal Component */}

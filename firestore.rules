@@ -1,0 +1,50 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Bookings collection (stores one document per booked day)
+    match /bookings/{bookingId} {
+
+      // Allow creation of individual daily booking documents IF:
+      // 1. They are creating a new document.
+      // 2. The data being sent has the required fields and correct types.
+      // 3. No unexpected fields are being written.
+      allow create: if request.resource.data.name is string &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.email is string &&
+                       request.resource.data.email.matches('^[^@]+@[^@]+\\.[^@]+$') &&
+                       request.resource.data.phone is string &&
+                       request.resource.data.phone.size() > 0 &&
+                       request.resource.data.streetAddress is string &&
+                       request.resource.data.streetAddress.size() > 0 &&
+                       request.resource.data.zipCode is string &&
+                       request.resource.data.zipCode.size() > 0 &&
+                       request.resource.data.detergent is bool &&
+                       request.resource.data.extraInfo is string && // Assuming extraInfo is always sent, even if empty
+                       request.resource.data.bookingDate is timestamp &&
+                       request.resource.data.bookingGroupId is string &&
+                       request.resource.data.bookingGroupId.size() > 0 &&
+                       request.resource.data.sequence is number &&
+                       request.resource.data.sequence >= 1 &&
+                       request.resource.data.totalDays is number &&
+                       request.resource.data.totalDays >= 1 &&
+                       // Ensure no other fields are being written than these exact ones
+                       request.resource.data.keys().hasOnly([
+                         'name', 'email', 'phone', 'streetAddress', 'zipCode',
+                         'detergent', 'extraInfo', 'bookingDate', 'bookingGroupId',
+                         'sequence', 'totalDays'
+                       ]);
+
+      // Disallow all direct client-side reads, updates, and deletes from the bookings collection.
+      // These operations will be handled by Cloud Functions (for reading booked dates)
+      // or potentially by admin-privileged functions in the future.
+      allow read, update, delete: if false;
+    }
+
+    // Default deny for any other paths/collections not explicitly matched
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

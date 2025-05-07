@@ -15,23 +15,17 @@ function useBookings() {
     setIsLoading(true);
     setError(null);
     try {
-      // Fetch booked dates for the month of the given date
       const year = date.getFullYear();
       const month = date.getMonth();
-      const fetchedBookedDates = await fetchBookedDatesInMonth(year, month);
+      const fetchedBookedDateStrings = await fetchBookedDatesInMonth(year, month);
 
-      // Store dates as YYYY-MM-DD strings for easy comparison in react-calendar
-      const bookedDateStrings = fetchedBookedDates.map(ts => {
-          const d = ts.toDate(); // Convert Firestore Timestamp to JS Date
-          // Ensure correct date components (potential timezone issues)
-          return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      });
-      setBookedDates(bookedDateStrings);
+      // fetchBookedDatesInMonth now directly returns YYYY-MM-DD strings
+      setBookedDates(fetchedBookedDateStrings);
 
     } catch (err) {
-      console.error("Error in useBookings fetching booked dates: ", err);
+      console.error("Error in useBookings loading booked dates: ", err);
       setError('Failed to load booking availability.');
-      setBookedDates([]); // Clear on error
+      setBookedDates([]);
     } finally {
       setIsLoading(false);
     }
