@@ -238,34 +238,24 @@
             let invoicePdfBuffer = null;
 
             try {
-                console.log("Attempting PDF generation (raw font buffers)...");
+                console.log("Attempting PDF generation (raw font buffers) - for potential future use...");
                 const bookingData = { name, email, streetAddress, zipCode, phone, numberOfDays, detergent, totalCost };
                 invoicePdfBuffer = await generateInvoicePdf(bookingData, formattedStartDateForEmail, formattedReturnDateForEmail);
                 if (invoicePdfBuffer && invoicePdfBuffer.length > 0) {
-                    console.log(`PDF generated (raw font buffers). Size: ${invoicePdfBuffer.length} bytes`);
+                    console.log(`PDF generated (raw font buffers) but NOT ATTACHING. Size: ${invoicePdfBuffer.length} bytes`);
                 } else {
-                    console.warn("PDF buffer null/empty (raw font buffers).");
+                    console.warn("PDF buffer null/empty (raw font buffers) - NOT ATTACHING.");
                 }
             } catch (error) {
-                console.error("Critical error PDF generation (raw font buffers):", error);
+                console.error("Critical error PDF generation (raw font buffers) - NOT ATTACHING:", error);
             }
 
-            const safeDate = selectedDateString.replace(/-/g, '');
-            const safeName = name.replace(/[^a-zA-Z0-9]/g, '');
-            const invoiceFilename = `Lasku-Iisaki-${safeName}-${safeDate}.pdf`;
             const attachments = [];
-
-            if (invoicePdfBuffer && invoicePdfBuffer.length > 0) {
-                console.log(`Attaching PDF: ${invoiceFilename}`);
-                attachments.push({ filename: invoiceFilename, content: invoicePdfBuffer, contentType: 'application/pdf' });
-            } else {
-                console.warn("No PDF attachment. Buffer null/empty.");
-            }
 
             const mailOptionsToCustomer = {
                 from: `"Iisakin tekstiilipesuri" <${currentGmailUser}>`,
                 to: email,
-                subject: "Vahvistus varauksestasi ja lasku - Iisakin tekstiilipesuri",
+                subject: "Vahvistus varauksestasi - Iisakin tekstiilipesuri",
                 html: `
                   <p>Hei ${name},</p>
                   <p>Kiitos varauksestasi Iisakin Tekstiilipesurilta! Tämä on vahvistus tekstiilipesurin vuokrauksesta.</p>
@@ -282,7 +272,7 @@
                     <li><strong>Lisätiedot:</strong> ${extraInfo || 'Ei lisätietoja'}</li>
                     <li><strong>Kokonaishinta:</strong> ${totalCost} € (sis. ALV 25,5%)</li>
                   </ul>
-                  <p><strong>${(invoicePdfBuffer && invoicePdfBuffer.length > 0) ? "Liitteenä on lasku varauksestasi." : "Laskua ei voitu liittää tähän sähköpostiin teknisen virheen vuoksi. Otathan yhteyttä."}</strong> Maksuohjeet löytyvät laskusta.</p>
+                  <p>Alla näet varauksesi tiedot.</p>
                   <h3>Nouto- ja palautusohjeet:</h3>
                   <p>Pesuri sijaitsee Oulunkylässä osoitteessa: <strong>Pellavapellontie 7A, 00650 Helsinki</strong>.</p>
                   <p>Muistathan palauttaa pesurin sovittuun aikaan mennessä siistissä kunnossa, puhdistettuna ja kaikki osat tallella.</p>
@@ -309,7 +299,6 @@
                         <li><strong>Lisätiedot:</strong> ${extraInfo || 'Ei lisätietoja'}</li>
                         <li><strong>Kokonaishinta:</strong> ${totalCost} €</li>
                       </ul>
-                      <p><strong>Lasku ${ (invoicePdfBuffer && invoicePdfBuffer.length > 0) ? "on lähetetty asiakkaalle sähköpostitse." : "GENERATIO EPÄONNISTUI, ei lähetetty asiakkaalle."}</strong></p>
                       <hr><p>Tämä on automaattinen ilmoitus varausjärjestelmästä.</p>
                     `
                 };
@@ -326,7 +315,7 @@
               console.log("Sending confirmation email to customer...");
               await transporter.sendMail(mailOptionsToCustomer);
               console.log("Confirmation email sent to customer successfully.");
-              return { success: true, message: "Emails sent successfully, PDF status logged." };
+              return { success: true, message: "Emails sent successfully, PDF attachment is now disabled." };
             } catch (customerEmailError) {
               console.error("Error sending confirmation email to customer:", customerEmailError);
               return { error: { code: 'internal', message: `Failed to send email to customer: ${customerEmailError.message}` } };
