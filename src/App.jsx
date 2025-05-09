@@ -195,7 +195,7 @@ function App() {
       {/* Wrap subtitle and instructions */}
       <div className="info-box">
         <p className="instructions">
-          VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA <span style={{color: '#FFD600'}}>KÄRCHER PUZZI 8/1</span> TEKSTIILIPESURI HELPOSTI OULUNKYLÄSTÄ.
+          VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA <span style={{color: '#FFD600'}}>KÄRCHER PUZZI 8/1</span> TEKSTIILIPESURI HELPOSTI OULUNKYLÄSTÄ - <span style={{color: '#FFD600'}}>PELLAVAPELLONTIE 7A</span>
         </p>
         <br></br>
         <h2 className="subtitle">Tehokas tekstiilipesuri vuokralle Oulunkylässä – 35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
