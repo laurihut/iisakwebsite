@@ -20,6 +20,8 @@ service cloud.firestore {
                        request.resource.data.streetAddress.size() > 0 &&
                        request.resource.data.zipCode is string &&
                        request.resource.data.zipCode.size() > 0 &&
+                       request.resource.data.pickupTime is string &&
+                       request.resource.data.pickupTime.size() > 0 &&
                        request.resource.data.detergent is bool &&
                        request.resource.data.extraInfo is string && // Assuming extraInfo is always sent, even if empty
                        request.resource.data.bookingDate is timestamp &&
@@ -31,7 +33,7 @@ service cloud.firestore {
                        request.resource.data.totalDays >= 1 &&
                        // Ensure no other fields are being written than these exact ones
                        request.resource.data.keys().hasOnly([
-                         'name', 'email', 'phone', 'streetAddress', 'zipCode',
+                         'name', 'email', 'phone', 'streetAddress', 'zipCode', 'pickupTime',
                          'detergent', 'extraInfo', 'bookingDate', 'bookingGroupId',
                          'sequence', 'totalDays'
                        ]);

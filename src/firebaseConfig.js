@@ -5,22 +5,15 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 // Add other services like auth, storage as needed
 // import { getAuth } from "firebase/auth";
 
-// Read configuration from environment variables
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    apiKey: "AIzaSyD_WuePx0gg3HEZQNtCDL2jzTcRCH7NGcQ",
+    authDomain: "iisakintekstiilipesuri.firebaseapp.com",
+    projectId: "iisakintekstiilipesuri",
+    storageBucket: "iisakintekstiilipesuri.firebasestorage.app",
+    messagingSenderId: "605300048092",
+    appId: "1:605300048092:web:8c887f96b9358e2cc23419"
   };
-
-// Basic check to ensure variables are loaded
-if (!firebaseConfig.apiKey) {
-    // You might want to throw an error or display a message to the user
-    console.error("Firebase API Key is missing. Check environment variables.");
-}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
