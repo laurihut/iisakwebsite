@@ -18,6 +18,7 @@ function BookingForm({
   const [streetAddress, setStreetAddress] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
+  const [pickupTime, setPickupTime] = useState('17:00');
   const [extraInfo, setExtraInfo] = useState('');
   const [showDetergentInfo, setShowDetergentInfo] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -71,6 +72,7 @@ function BookingForm({
         streetAddress,
         zipCode,
         phone,
+        pickupTime,
         extraInfo,
         selectedDateString: selectedDateString, // Use the YYYY-MM-DD string
         numberOfDays, // from props
@@ -115,7 +117,7 @@ function BookingForm({
   return (
     <form onSubmit={handleSubmit} className="booking-form">
       <h3>Kirjoita yhteystiedot ja valitse päivä</h3>
-      <p>Vuokraus alkaa: {displaySelectedDate()} kello 17</p>
+      <p>Vuokraus alkaa: {displaySelectedDate()} kello {pickupTime}</p>
       {formError && <p className="error-message" style={{ textAlign: 'center' }}>{formError}</p>}
 
       <div>
@@ -167,6 +169,33 @@ function BookingForm({
           onChange={(e) => setPhone(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label htmlFor="pickupTime">Noutokellonaika (arvio):</label>
+        <select
+          id="pickupTime"
+          value={pickupTime}
+          onChange={(e) => setPickupTime(e.target.value)}
+          required
+        >
+          <option value="17:00">17:00</option>
+          <option value="17:15">17:15</option>
+          <option value="17:30">17:30</option>
+          <option value="17:45">17:45</option>
+          <option value="18:00">18:00</option>
+          <option value="18:15">18:15</option>
+          <option value="18:30">18:30</option>
+          <option value="18:45">18:45</option>
+          <option value="19:00">19:00</option>
+          <option value="19:15">19:15</option>
+          <option value="19:30">19:30</option>
+          <option value="19:45">19:45</option>
+          <option value="20:00">20:00</option>
+          <option value="20:15">20:15</option>
+          <option value="20:30">20:30</option>
+          <option value="20:45">20:45</option>
+          <option value="21:00">21:00</option>
+        </select>
       </div>
 
       {/* Day Buttons - Use prop and callback */}

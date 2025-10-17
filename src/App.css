@@ -214,7 +214,8 @@
   color: #B0B0B0;
 }
 
-.booking-form input {
+.booking-form input,
+.booking-form select {
   width: 100%;
   padding: 0.7em 0.9em;
   border: 1px solid #444;
@@ -227,7 +228,8 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.booking-form input:focus {
+.booking-form input:focus,
+.booking-form select:focus {
   border-color: #FFD600;
   outline: none;
   box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.5);
@@ -551,6 +553,7 @@ html {
   }
 
   .booking-form input,
+  .booking-form select,
   .booking-form button:not(.day-button),
   .booking-form textarea {
     padding: 0.7em 1em;
@@ -614,6 +617,7 @@ html {
   }
 
   .booking-form input,
+  .booking-form select,
   .booking-form button:not(.day-button),
   .booking-form textarea {
     padding: 0.6em 0.8em;

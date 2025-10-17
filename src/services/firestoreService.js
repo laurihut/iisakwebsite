@@ -109,7 +109,7 @@ export const fetchBookedDatesInMonth = async (year, month) => {
 // Function to add a new booking covering multiple dates
 export const addBooking = async (bookingData) => {
   const {
-      name, email, streetAddress, zipCode, phone,
+      name, email, streetAddress, zipCode, phone, pickupTime,
       numberOfDays, detergent, extraInfo, 
       startDateString // Renamed from startDate, now expects "YYYY-MM-DD"
       // totalCost is in bookingData but not directly used by addBooking for Firestore write
@@ -139,7 +139,7 @@ export const addBooking = async (bookingData) => {
 
       const docRef = doc(bookingsCollectionRef); 
       batch.set(docRef, {
-          name, email, streetAddress, zipCode, phone, detergent, extraInfo,
+          name, email, streetAddress, zipCode, phone, pickupTime, detergent, extraInfo,
           bookingDate: bookingDateForDoc, // Pass JS Date (UTC midnight), Firestore SDK converts to Timestamp
           bookingGroupId,
           sequence: i + 1,

@@ -215,7 +215,7 @@
             const transporter = getConfirmationTransporter();
             if (!transporter) return { error: { code: 'internal', message: 'Email service not configured.' } };
             
-            const { name, email, streetAddress, zipCode, phone, extraInfo, selectedDateString, numberOfDays, detergent, totalCost } = request.data;
+            const { name, email, streetAddress, zipCode, phone, pickupTime, extraInfo, selectedDateString, numberOfDays, detergent, totalCost } = request.data;
             if (!selectedDateString || !selectedDateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
                 console.error("Invalid selectedDateString:", selectedDateString);
                 return { error: { code: 'invalid-argument', message: 'Valid date string (YYYY-MM-DD) required.' } };
@@ -266,7 +266,8 @@
                     <li><strong>Puhelin:</strong> ${phone}</li>
                     <li><strong>Katuosoite:</strong> ${streetAddress}</li>
                     <li><strong>Postinumero:</strong> ${zipCode}</li>
-                    <li><strong>Valittu alkamispäivä:</strong> ${formattedStartDateForEmail} (nouto klo 17:00 alkaen)</li>
+                    <li><strong>Valittu alkamispäivä:</strong> ${formattedStartDateForEmail}</li>
+                    <li><strong>Noutokellonaika (arvio):</strong> ${pickupTime || '17:00'}</li>
                     <li><strong>Viimeinen palautusaika:</strong> ${formattedReturnDateForEmail} klo 17:00 mennessä</li>
                     <li><strong>Pesuaine (6€):</strong> ${detergentText}</li>
                     <li><strong>Lisätiedot:</strong> ${extraInfo || 'Ei lisätietoja'}</li>
@@ -293,6 +294,7 @@
                       <h3>Varaustiedot:</h3>
                       <ul>
                         <li><strong>Valittu alkamispäivä:</strong> ${formattedStartDateForEmail}</li>
+                        <li><strong>Noutokellonaika (arvio):</strong> ${pickupTime || '17:00'}</li>
                         <li><strong>Viimeinen palautusaika:</strong> ${formattedReturnDateForEmail} klo 17:00 mennessä</li>
                         <li><strong>Pesuaine:</strong> ${detergentText}</li>
                         <li><strong>Lisätiedot:</strong> ${extraInfo || 'Ei lisätietoja'}</li>
