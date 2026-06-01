@@ -191,14 +191,14 @@ function App() {
 
   return (
     <div className="app-container"> {/* Use a container for better layout */}
-      <h1 className="main-title">IISAKIN TEKSTIILIPESURI OULUNKYLÄ</h1>
+      <h1 className="main-title">IISAKIN TEKSTIILIPESURI JYVÄSKYLÄ - KIVILAMPI</h1>
       {/* Wrap subtitle and instructions */}
       <div className="info-box">
         <p className="instructions">
-          VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA <span style={{color: '#FFD600'}}>KÄRCHER PUZZI 8/1</span> TEKSTIILIPESURI HELPOSTI OULUNKYLÄSTÄ - <span style={{color: '#FFD600'}}>PELLAVAPELLONTIE 7A</span>
+          VALITSE SOPIVA PÄIVÄ KALENTERISTA JA VARAA <span style={{color: '#FFD600'}}>KÄRCHER PUZZI 8/1</span> TEKSTIILIPESURI HELPOSTI JYVÄSKYLÄSTÄ (KIVILAMPI) - <span style={{color: '#FFD600'}}>KIVILAMMENTIE 45</span>
         </p>
         <br></br>
-        <h2 className="subtitle">Tehokas tekstiilipesuri vuokralle Oulunkylässä – 35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
+        <h2 className="subtitle">Tehokas tekstiilipesuri vuokralle Jyväskylässä (Kivilampi) – 35 € / päivä + 10 € / lisäpäivä (pesuaine + 6 €)</h2>
       </div>
 
       {/* Floating Info Button */}

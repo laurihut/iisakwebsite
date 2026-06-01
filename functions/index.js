@@ -48,7 +48,7 @@
             } = bookingData;
 
             const companyName = "Iisakin tekstiilipesuri";
-            const companyAddress = "Pellavapellontie 7A, 00650 Helsinki";
+            const companyAddress = "Kivilammentie 45, 40800 Jyväskylä";
             const companyEmail = EMAIL_USER_PARAM.value();
             const companyPhone = "040 410 1920";
             const companyVatId = "Y-tunnus: 3522024-9";
@@ -274,7 +274,7 @@
                     <li><strong>Kokonaishinta:</strong> ${totalCost} € (sis. ALV 25,5%)</li>
                   </ul>
                   <h3>Nouto- ja palautusohjeet:</h3>
-                  <p>Pesuri sijaitsee Oulunkylässä osoitteessa: <strong>Pellavapellontie 7A, 00650 Helsinki</strong>.</p>
+                  <p>Pesuri sijaitsee Jyväskylän Kivilammissa osoitteessa: <strong>Kivilammentie 45, 40800 Jyväskylä</strong>.</p>
                   <p>Muistathan palauttaa pesurin sovittuun aikaan mennessä siistissä kunnossa, puhdistettuna ja kaikki osat tallella.</p>
                   <p>Ongelmatilanteissa tai jos haluat muokata varaustasi, ota yhteyttä sähköpostilla <a href="mailto:${currentGmailUser}">${currentGmailUser}</a> tai puhelimitse/tekstiviestillä numeroon 040 410 1920.</p>
                   <p>Ystävällisin terveisin,<br>Iisak</p>

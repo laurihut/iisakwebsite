@@ -10,7 +10,7 @@ const InfoModal = ({ isOpen, onClose }) => {
     <>
       <h2>Tekstiilipesurin nouto- ja palautusohjeet:</h2>
       <ul style={{ textAlign: 'left', color: '#fff' }}>
-        <li >Pesuri sijaitsee Oulunkylässä osoitteessa Pellavapellontie 7A, 00650 Helsinki.</li>
+        <li >Pesuri sijaitsee Jyväskylän Kivilammissa osoitteessa Kivilammentie 45, 40800 Jyväskylä.</li>
         <li>Saat tarkemmat ohjeet sähköpostiisi varausvahvistuksen yhteydessä. Tarkistathan myös roskapostikansion.
             Mikäli haluat muokata varaustasi, ota yhteyttä sähköpostilla tai puhelimitse viestillä (iisakintekstiilipesuri@gmail.com, 040 410 1920).
         </li>
